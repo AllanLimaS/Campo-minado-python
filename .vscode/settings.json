@@ -1,0 +1,4 @@
+{
+    "python.terminal.launchArgs": [],
+    "python.analysis.typeCheckingMode": "basic"
+}
