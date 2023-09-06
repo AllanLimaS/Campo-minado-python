@@ -2,15 +2,27 @@ import pygame
 
 class Block:
     def __init__(self, x, y, blockSize):
+        
+        # Coordenadas do bloco
         self.x = x
         self.y = y
-        self.blockSize = blockSize
-        self.bomb = False
-        self.clicked = False
-        self.flag = False
+        
+        self.blockSize = blockSize # propriedade para o tamanho do bloco na tela 
+        self.bomb = False # flag para saber se tem bomba
+        self.clicked = False # flag para saber se foi clicado
+        self.flag = False # flag para saber se foi colocada uma flag
+        
+        # Após o primeiro click do jogador, uma area de 3x3 em torno do click 
+        # vira uma safezone, onde nao é possivel ter bomba, para facilitar o 
+        # inicio do game
+        self.safe = False 
+        
+        
         self.image = pygame.image.load("Assets/normal.png")
         self.image = pygame.transform.scale(self.image,(self.blockSize,self.blockSize))
 
+    def setSafe(self):
+        self.safe = True
 
     def setBomb(self):
         self.bomb = True
@@ -47,6 +59,23 @@ class Block:
                 self.image = pygame.image.load("Assets/normal.png")
             self.image = pygame.transform.scale(self.image,(self.blockSize,self.blockSize))
 
+
+    # Verificação para vitória 
+    def getStatus(self):
         
+        # Caso não houver bomba, e o bloco estiver clicado
+        if (self.bomb == False and self.clicked == True):
+            return "ok"
+        
+        # Caso houver bomba e o bloco estiver com flag
+        elif (self.bomb == True and self.flag == True):
+            return "ok"
+        
+        # Caso houver bomba e usuario tiver perdido vida
+        elif (self.bomb == True and self.clicked == True ):
+            return "ok"
+        
+        else:  
+            return "notOk"
             
             
