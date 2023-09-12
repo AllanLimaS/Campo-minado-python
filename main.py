@@ -18,8 +18,8 @@ pygame.display.set_caption("Campo minado - Allan Lima")
 screen.fill((0,0,0))
 introducao(screen)
 fade_out(screen,1000)
-
 menu_titulo(screen)
+
 while True:
     timer.tick(fps)
 
@@ -27,12 +27,13 @@ while True:
     botao_sair = Button(screen,text="Sair",x=10,y=350, width= 100, height= 50)
 
     if pygame.mouse.get_pressed()[0]:
-        print(pygame.mouse.get_pos())
+        
         if botao_jogar.check_click():
-
             fade_out(screen,2000)
-            game = Game(screen)
+            game = Game(screen,'Fácil')
             game.run()
+            screen.fill((0,0,0))
+            menu_titulo(screen)
 
         if botao_sair.check_click():
             fade_out(screen,2000)

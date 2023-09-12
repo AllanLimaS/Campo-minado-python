@@ -6,14 +6,24 @@ import pygame
 import random
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self, screen, dificuldade):
         self.screen = screen
-        self.blockSize = 50
-        self.bombLimit = 10
-        self.campoSize = screen.get_width() // self.blockSize , screen.get_height() // self.blockSize 
+
+        self.dificuldade = dificuldade
+        if dificuldade == 'Fácil':
+            self.blockSize = 50
+            self.bombLimit = 10
+        elif dificuldade == 'Médio':
+            self.blockSize = 50
+            self.bombLimit = 16
+        else:
+            self.blockSize = 50
+            self.bombLimit = 25
+
+        self.uiSize = 100
+        self.campoSize = screen.get_width() // self.blockSize , (screen.get_height() - self.uiSize) // self.blockSize 
 
         self.vidas = 3
-        self.pontuacao = 0
         self.mapafeito = False
         self.bombasColocadas = False
         self.fps = 60
@@ -41,18 +51,23 @@ class Game:
                 # Cria o elemento block
                 block = Block(x,y,self.blockSize)
                 # printa na tela 
-                self.screen.blit(block.image, (x* self.blockSize, y* self.blockSize))
+                
+                self.screen.blit(block.image, (x* self.blockSize, (y* self.blockSize + self.uiSize)))
                 # Adicionao o block a lista
                 self.campo[x][y] = block    
             
     def handleClick(self,mousePos,mouseButton):
     
-        print("Vidas:", self.vidas)
-        print("Pontuação:", self.pontuacao)
-        
         x, y = mousePos
+
+        # interface do jogo apenas 
+        if( y <= self.uiSize):
+            return None
+        y = y - self.uiSize
+
         # Calcule o índice do bloco com base na posição do mouse e nas dimensões dos blocos
         index = x // self.blockSize, y // self.blockSize
+
         # Verifique se o índice está dentro dos limites do campo
         if 0 <= index[0] < self.campoSize[0] and 0 <= index[1] < self.campoSize[1]:
             if mouseButton == "left":
@@ -77,7 +92,6 @@ class Game:
         if (clickReturn == "bomb"):
             self.vidas -= 1
         elif (clickReturn == "safe"):
-            self.pontuacao += 1
             # botar isso aqui em baixo em uma variavel 
             if self.checkVizinhos(block) == "safeBlock":
                 # caso o bloco selecionado nao possuir bombas em volta,
@@ -88,12 +102,12 @@ class Game:
                             index = x , y
                             self.clickBlock(index)
 
-        self.screen.blit(block.image, (block.x* self.blockSize, block.y* self.blockSize))
+        self.screen.blit(block.image, (block.x* self.blockSize, (block.y* self.blockSize)+self.uiSize))
     
     def flagBlock(self,index):
         block = self.campo[index[0]][index[1]]
         block.setFlag()
-        self.screen.blit(block.image, (block.x* self.blockSize, block.y* self.blockSize))
+        self.screen.blit(block.image, (block.x* self.blockSize, (block.y* self.blockSize)+self.uiSize))
         
     def setSafezone(self,index):
         for x in range(index[0] - 1, index[0] + 2):
@@ -148,10 +162,19 @@ class Game:
         if win == True:
             return True
     
-    
     def run(self):
-        while True:
+        running = True
+        while running:
+
             self.timer.tick(self.fps)
+
+            update_display(self.screen,self.dificuldade,self.vidas)
+
+            if(self.vidas<=0):
+                fade_out_derrota(self.screen,1000,self.dificuldade)
+                running = False
+
+
             if(self.mapafeito == False):
                 self.drawMap()
                 self.mapafeito = True
@@ -162,11 +185,20 @@ class Game:
                     mousePos = pygame.mouse.get_pos()
                     if event.button == 1:
                         self.handleClick(mousePos,"left")
+
                     elif event.button == 3:
                         self.handleClick(mousePos,"right")
+
                     if self.checkWin():
-                        pygame.quit()
-                        sys.exit()
+                        fade_out_vitoria(self.screen,1000,self.dificuldade)
+                        if self.dificuldade == 'Fácil':
+                            game = Game(self.screen,'Médio')
+                            game.run()
+                        elif self.dificuldade == 'Médio':
+                            game = Game(self.screen,'Difícil')
+                            game.run()
+                        running = False
+                        
 
                 if event.type == pygame.QUIT:
 
@@ -174,4 +206,3 @@ class Game:
                     sys.exit()
 
             pygame.display.update()
-            # pygame.display.flip()
