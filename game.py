@@ -1,4 +1,5 @@
 from block import Block
+from effects import *
 
 import sys
 import pygame
@@ -15,6 +16,8 @@ class Game:
         self.pontuacao = 0
         self.mapafeito = False
         self.bombasColocadas = False
+        self.fps = 60
+        self.timer = pygame.time.Clock()
         
         self.campo = self.createCampo()
 
@@ -148,6 +151,7 @@ class Game:
     
     def run(self):
         while True:
+            self.timer.tick(self.fps)
             if(self.mapafeito == False):
                 self.drawMap()
                 self.mapafeito = True
@@ -170,3 +174,4 @@ class Game:
                     sys.exit()
 
             pygame.display.update()
+            # pygame.display.flip()
