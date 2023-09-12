@@ -47,6 +47,13 @@ class Block:
                 self.image = pygame.image.load("Assets/2.png")
             case 3:
                 self.image = pygame.image.load("Assets/3.png")
+            case 4:
+                self.image = pygame.image.load("Assets/4.png")
+            case 5:
+                self.image = pygame.image.load("Assets/5.png")
+            case 6:
+                self.image = pygame.image.load("Assets/6.png")
+
 
         self.image = pygame.transform.scale(self.image,(self.blockSize,self.blockSize))
         
