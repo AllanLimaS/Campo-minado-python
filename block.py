@@ -17,7 +17,6 @@ class Block:
         # inicio do game
         self.safe = False 
         
-        
         self.image = pygame.image.load("Assets/normal.png")
         self.image = pygame.transform.scale(self.image,(self.blockSize,self.blockSize))
 

@@ -1,14 +1,16 @@
 import pygame
 
 class Button:
-    def __init__(self, screen, text, x, y, width, height):
-
-        # X é centraçizaddo na tela, massa
-        # tem que arruamro nome da var widht para width
+    def __init__(self, screen, text, x, y, width, height, center):
 
         self.screen = screen
         self.text = text
-        self.x = (screen.get_width() - width) // 2
+        
+        if center:
+            self.x = (screen.get_width() - width) // 2
+        else:
+            self.x = x
+
         self.y = y
         self.width = width
         self.height = height

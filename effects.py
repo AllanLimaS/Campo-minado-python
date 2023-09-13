@@ -1,10 +1,10 @@
 import pygame
 
 
-# Função para fazer o fade-out
-def fade_out(screen, fade_duration):
+# Função para fazer a animacao de fade-out
+def fadeOut(screen, fade_duration):
     fade_surface = pygame.Surface(screen.get_size())
-    fade_surface.fill((0, 0, 0))  # Preencha com preto
+    fade_surface.fill((0, 0, 0)) 
     for alpha in range(0, 255):
         fade_surface.set_alpha(alpha)
         screen.blit(fade_surface, (0, 0))
@@ -13,10 +13,10 @@ def fade_out(screen, fade_duration):
 
     
 
-# Função para fazer o fade-out
-def fade_out_derrota(screen, fade_duration,dificuldade):
+# Função para fazer a animacao de derrota
+def fadeOutDefeat(screen, fade_duration,difficulty):
     fade_surface = pygame.Surface(screen.get_size())
-    fade_surface.fill((255, 0, 0))  # Preencha com preto
+    fade_surface.fill((255, 0, 0))  
     for alpha in range(0, 255):
         fade_surface.set_alpha(alpha)
         screen.blit(fade_surface, (0, 0))
@@ -24,7 +24,7 @@ def fade_out_derrota(screen, fade_duration,dificuldade):
         pygame.time.delay(fade_duration // 255)
     
     font = pygame.font.Font(None, 36)
-    text = "Você perdeu no - " + dificuldade
+    text = "Você perdeu no - " + difficulty
     text_surface = font.render(text, True, (255, 255, 255))
     text_rect = text_surface.get_rect(center=(200, 250))
     screen.blit(text_surface, text_rect)
@@ -40,13 +40,13 @@ def fade_out_derrota(screen, fade_duration,dificuldade):
 
         # Apenas pausa sem renderizar novamente
         pygame.time.delay(tempo_de_pausa)
-        screen.fill((0, 0, 0))  # Preencha com preto
+        screen.fill((0, 0, 0))  
         return
 
-# Função para fazer o fade-out
-def fade_out_vitoria(screen, fade_duration,dificuldade):
+# Função para fazer a animacao de vitoria
+def fadeOutWin(screen, fade_duration,difficulty):
     fade_surface = pygame.Surface(screen.get_size())
-    fade_surface.fill((255, 255, 255))  # Preencha com branco
+    fade_surface.fill((255, 255, 255))  
     for alpha in range(0, 255):
         fade_surface.set_alpha(alpha)
         screen.blit(fade_surface, (0, 0))
@@ -54,7 +54,7 @@ def fade_out_vitoria(screen, fade_duration,dificuldade):
         pygame.time.delay(fade_duration // 255)
     
     font = pygame.font.Font(None, 36)
-    text = "Você venceu no - " + dificuldade
+    text = "Você venceu no - " + difficulty
     text_surface = font.render(text, True, (0, 0, 0))
     text_rect = text_surface.get_rect(center=(200, 250))
     screen.blit(text_surface, text_rect)
@@ -70,11 +70,11 @@ def fade_out_vitoria(screen, fade_duration,dificuldade):
 
         # Apenas pausa sem renderizar novamente
         pygame.time.delay(tempo_de_pausa)
-        screen.fill((0, 0, 0))  # Preencha com preto
+        screen.fill((0, 0, 0))  
         return 
 
 
-def introducao(screen):
+def intro(screen):
     clock = pygame.time.Clock()
 
     font = pygame.font.Font(None, 24)
@@ -107,7 +107,7 @@ def introducao(screen):
         pygame.time.delay(tempo_de_pausa)
         return
     
-def menu_titulo(screen):
+def menuTitle(screen):
     font = pygame.font.Font(None, 36)
     text = "CAMPO MINADO"
     text_surface = font.render(text, True, (255, 255, 255))
@@ -116,11 +116,11 @@ def menu_titulo(screen):
     pygame.display.flip()
 
 
-def update_display(screen,dificuldade,vidas):
+def updateDisplay(screen,difficulty,health):
     pygame.draw.rect(screen,(255,255,255),(0,0,screen.get_width(),100))
 
     font = pygame.font.Font(None, 36)
-    text = dificuldade
+    text = difficulty
     text_surface = font.render(text, True, (0, 0, 0))
     text_rect = text_surface.get_rect(center=(200, 40))
     screen.blit(text_surface, text_rect)
@@ -135,7 +135,7 @@ def update_display(screen,dificuldade,vidas):
     # posição da barra de saúde
     barra_x = 10
     barra_y = 40 
-    barra_largura = vidas * 25
+    barra_largura = health * 25
     barra_altura = 25
 
     screen.blit(text_surface, text_rect)
