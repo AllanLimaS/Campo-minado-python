@@ -1,4 +1,9 @@
 # Campo-minado-python
+<p align="center">
+  <img width="250" src="https://github.com/AllanLimaS/Campo-minado-python/assets/49033925/cdce252e-ca30-4e81-89af-a01ed927f5de"/>
+  <img width="250" src="https://github.com/AllanLimaS/Campo-minado-python/assets/49033925/a6aee943-a4d9-4e24-bb9d-bfef091e5583"/>
+</p>
+
 
 # Para testar o projeto 
 Basta baixar a pasta "Campo Minado - Allan Lima",
